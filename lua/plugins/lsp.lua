@@ -1,6 +1,7 @@
 return {
   {
     "neovim/nvim-lspconfig",
+
     dependencies = {
       {
         "folke/lazydev.nvim",
@@ -16,13 +17,8 @@ return {
     },
 
     config = function()
-      --vim.lsp.config("lua_ls", {
-      --  settings = {
-      --    Lua = {},
-      --  },
-      --})
-
       vim.lsp.enable("lua_ls")
+      vim.lsp.enable("clangd")
     end
-  }
+  },
 }

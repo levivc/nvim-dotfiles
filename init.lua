@@ -43,3 +43,10 @@ vim.api.nvim_create_user_command('GitBlameLine', function()
 end, { desc = 'Print the git blame for the current line' })
 
 vim.cmd('packadd! nohlsearch')
+
+vim.diagnostic.config({
+  underline = false,
+  virtual_text = true,
+  signs = false,
+  severity_sort = true
+})

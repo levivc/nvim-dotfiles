@@ -1,6 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     lazy = false,
     build = ":TSUpdate",
 
@@ -40,6 +41,9 @@ return {
         indent = {
           enable = true
         },
+
+        modules = {},
+        ignore_install = {},
       })
     end
   }
