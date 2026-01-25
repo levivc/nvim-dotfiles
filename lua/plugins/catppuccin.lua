@@ -5,19 +5,15 @@ return {
     lazy = false,
     priority = 1000,
 
-    opts = {
-      flavour = "mocha",
-      highlight_overrides = {
-        mocha = function(mocha)
-          return {
-            LineNr = { fg = mocha.overlay2 }
-          }
-        end,
-      },
-    },
-
-    config = function (_, opts)
-      require("catppuccin").setup(opts)
+    config = function ()
+      require("catppuccin").setup({
+        flavour = "mocha",
+        highlight_overrides = {
+          mocha = function(mocha)
+            return { LineNr = { fg = mocha.overlay2 } }
+          end,
+        },
+      })
       vim.cmd.colorscheme("catppuccin")
     end
   }

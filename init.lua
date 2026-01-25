@@ -25,6 +25,9 @@ vim.o.splitright = true
 vim.o.splitbelow = true
 
 vim.o.clipboard = "unnamedplus"
+vim.o.undofile = true
+vim.o.updatetime = 250
+
 
 -- Highlight when yanking (copying) text.
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -50,3 +53,4 @@ vim.diagnostic.config({
   signs = false,
   severity_sort = true
 })
+

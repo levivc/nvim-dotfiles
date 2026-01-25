@@ -1,50 +1,56 @@
+local km = vim.keymap
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
-vim.keymap.set("n", "<leader>e", vim.cmd.Explore)
-vim.keymap.set("n", "<leader>q", "<C-w>q")
-vim.keymap.set("n", "<leader>s", "<C-w>s")
-vim.keymap.set("n", "<leader>v", "<C-w>v")
-vim.keymap.set("n", "<A-.>", ":bn<CR>")
-vim.keymap.set("n", "<A-,>", ":bp<CR>")
-
--- Source file, selection and line shortcuts
-vim.keymap.set("n", "<space><space>x", ":source %<CR>")
-vim.keymap.set("n", "<space>x", ":.lua<CR>")
-vim.keymap.set("v", "<space>x", ":lua<CR>")
-
--- Tab window settings
-vim.keymap.set("n", "<leader>t", ":tabe<CR>")
-vim.keymap.set("n", "<leader>l", "gt")
-vim.keymap.set("n", "<leader>h", "gT")
-vim.keymap.set("n", "<leader>L", ":tabmove +<CR>")
-vim.keymap.set("n", "<leader>H", ":tabmove -<CR>")
-
 -- Use <Esc> to exit terminal mode
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+km.set('t', '<Esc>', '<C-\\><C-n>')
 -- Saving
-vim.keymap.set({ 'n', 'i' }, '<C-s>', '<C-\\><C-n><C-w>:w<CR>')
+km.set({ 'n', 'i' }, '<C-s>', '<C-\\><C-n><cmd>w<CR>')
 
+-- alt shortcuts
 -- Navigate windows
-vim.keymap.set({ "t", "i", "n" }, "<A-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set({ "t", "i", "n" }, "<A-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set({ "t", "i", "n" }, "<A-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set({ "t", "i", "n" }, "<A-l>", "<C-\\><C-n><C-w>l")
-
+km.set({ "t", "i", "n" }, "<A-h>", "<C-\\><C-n><C-w>h")
+km.set({ "t", "i", "n" }, "<A-j>", "<C-\\><C-n><C-w>j")
+km.set({ "t", "i", "n" }, "<A-k>", "<C-\\><C-n><C-w>k")
+km.set({ "t", "i", "n" }, "<A-l>", "<C-\\><C-n><C-w>l")
 -- Move windows
-vim.keymap.set({ "t", "i", "n" }, "<A-H>", "<C-\\><C-n><C-w>H")
-vim.keymap.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>J")
-vim.keymap.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>K")
-vim.keymap.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>L")
-
+km.set({ "t", "i", "n" }, "<A-H>", "<C-\\><C-n><C-w>H")
+km.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>J")
+km.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>K")
+km.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>L")
 -- Window resizing
-vim.keymap.set("n", "<A-->", "5<C-w>-")
-vim.keymap.set("n", "<A-=>", "5<C-w>+")
-vim.keymap.set("n", "<A-]>", "5<C-w>>")
-vim.keymap.set("n", "<A-[>", "5<C-w><")
-vim.keymap.set("n", "<leader>-", "<C-w>_")
-vim.keymap.set("n", "<leader><Bslash>", "<C-w>|")
-vim.keymap.set("n", "<leader>=", "<C-w>=")
+km.set("n", "<A-->", "5<C-w>-")
+km.set("n", "<A-=>", "5<C-w>+")
+km.set("n", "<A-]>", "5<C-w>>")
+km.set("n", "<A-[>", "5<C-w><")
+-- Buffers
+km.set("n", "<A-.>", "<cmd>bn<CR>")
+km.set("n", "<A-,>", "<cmd>bp<CR>")
 
-vim.keymap.set("n", "<leader>m", vim.diagnostic.setloclist)
-vim.keymap.set("n", "<leader>M", vim.diagnostic.setqflist)
+-- leader shortcuts
+-- split and close windows
+km.set("n", "<leader>q", "<C-w>q")
+km.set("n", "<leader>s", "<C-w>s")
+km.set("n", "<leader>v", "<C-w>v")
+-- window expand and reset
+km.set("n", "<leader>-", "<C-w>_")
+km.set("n", "<leader><Bslash>", "<C-w>|")
+km.set("n", "<leader>=", "<C-w>=")
+-- tabs
+km.set("n", "<leader>t", "<cmd>tabe<CR>")
+km.set("n", "<leader>T", "<C-w>T")
+km.set("n", "<leader>L", "<cmd>tabmove +<CR>")
+km.set("n", "<leader>H", "<cmd>tabmove -<CR>")
+-- execute lua code
+km.set("n", "<leader><leader>x", "<cmd>source %<CR>")
+km.set("n", "<leader>x", "<cmd>.lua<CR>")
+km.set("v", "<leader>x", "<cmd>lua<CR>")
+-- quickfix, location list
+km.set("n", "<leader>j", "<cmd>cnext<CR>")
+km.set("n", "<leader>k", "<cmd>cprev<CR>")
+-- diagnostic
+km.set("n", "<leader>m", vim.diagnostic.setloclist)
+km.set("n", "<leader>M", vim.diagnostic.setqflist)
+-- netrw
+km.set("n", "<leader>e", vim.cmd.Explore)
