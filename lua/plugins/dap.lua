@@ -9,6 +9,7 @@ return {
       dependencies = { "mason-org/mason.nvim" }
     }
   },
+
   config = function ()
     local mason_dap = require("mason-nvim-dap")
     local dap = require("dap")
@@ -17,24 +18,18 @@ return {
 
     dap_virtual_text.setup({})
 
-    mason_dap.setup({
-      ensure_installed = { "cppdbg" },
-      automatic_installation = true,
-      handlers = {} -- default
-    })
-
     dap.adapters["local-lua"] = {
       type = "executable",
       command = "node",
       args = {
-        vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/extension/debugAdapter.js"
+        vim.fn.stdpath("data") .. "/mason/share/local-lua-debugger-vscode/extension/debugAdapter.js"
       },
       enrich_config = function(config, on_config)
         if not config["extensionPath"] then
           local c = vim.deepcopy(config)
           -- 💀 If this is missing or wrong you'll see 
           -- "module 'lldebugger' not found" errors in the dap-repl when trying to launch a debug session
-          c.extensionPath = vim.fn.stdpath("data") .. "/mason/packages/local-lua-debugger-vscode/"
+          c.extensionPath = vim.fn.stdpath("data") .. "/mason/share/local-lua-debugger-vscode/"
           on_config(c)
         else
           on_config(config)
@@ -42,9 +37,29 @@ return {
       end,
     }
 
+    dap.configurations.lua = {
+      {
+        name = 'Launch file',
+        type = 'local-lua',
+        request = 'launch',
+        cwd = '${workspaceFolder}',
+        program = {
+          lua = 'luajit',
+          file = '${file}',
+        },
+        args = {},
+      },
+    }
+
+    mason_dap.setup({
+      ensure_installed = { "cppdbg" },
+      automatic_installation = true,
+      handlers = {} -- default
+    })
+
     dap.configurations.c = {
       {
-        name = "Launch file",
+        name = "Launch executable",
         type = "cppdbg",
         request = "launch",
         MIMode = "gdb",
@@ -54,22 +69,50 @@ return {
         cwd = '${workspaceFolder}',
         stopAtEntry = true,
       },
-      {
-        name = 'Attach to gdbserver :1234',
-        type = 'cppdbg',
-        request = 'launch',
-        MIMode = 'gdb',
-        miDebuggerServerAddress = 'localhost:1234',
-        miDebuggerPath = '/usr/bin/gdb',
-        cwd = '${workspaceFolder}',
-        program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-      },
+      --{
+      --  name = 'Attach to gdbserver :1234',
+      --  type = 'cppdbg',
+      --  request = 'launch',
+      --  MIMode = 'gdb',
+      --  miDebuggerServerAddress = 'localhost:1234',
+      --  miDebuggerPath = '/usr/bin/gdb',
+      --  cwd = '${workspaceFolder}',
+      --  program = function()
+      --    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      --  end,
+      --},
     }
     dap.configurations.cpp = dap.configurations.c
 
-    dapui.setup()
+    dapui.setup({
+      layouts = { {
+        elements = { {
+            id = "scopes",
+            size = 0.57
+          }, {
+            id = "watches",
+            size = 0.15
+          }, {
+            id = "stacks",
+            size = 0.20
+          }, {
+            id = "breakpoints",
+            size = 0.08
+          } },
+        position = "left",
+        size = 40
+      }, {
+        elements = { {
+            id = "repl",
+            size = 0.5
+          }, {
+            id = "console",
+            size = 0.5
+          } },
+        position = "bottom",
+        size = 10
+      } },
+    })
 
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
@@ -83,5 +126,58 @@ return {
     dap.listeners.before.event_exited.dapui_config = function()
       dapui.close()
     end
+
+    vim.keymap.set('n', '<F5>', function() dap.continue() end)
+    vim.keymap.set('n', '<F10>', function() dap.step_over() end)
+    vim.keymap.set('n', '<F11>', function() dap.step_into() end)
+    vim.keymap.set('n', '<F12>', function() dap.step_out() end)
+    vim.keymap.set('n', '<F9>', function() dap.toggle_breakpoint() end)
+    vim.keymap.set("n", "<F8>", function() dap.clear_breakpoints() end)
+    vim.keymap.set("n", "<F6>", function() dap.run_to_cursor() end)
+
+
+    vim.keymap.set("n", "<leader>bp", function() dap.toggle_breakpoint() end)
+    vim.keymap.set("n", "<leader>bd", function() dap.clear_breakpoints() end)
+    vim.keymap.set("n", "<leader>bl", function() dap.list_breakpoints(true) end)
+    vim.keymap.set("n", "<leader>bc", function() dap.set_breakpoint(vim.fn.input("Condition: ")) end)
+    vim.keymap.set("n", "<leader>bh", function() dap.set_breakpoint(nil, vim.fn.input("Hit condition: ")) end)
+    vim.keymap.set("n", "<leader>bm", function() dap.set_breakpoint(nil, nil, vim.fn.input("Log message: ")) end)
+    vim.keymap.set("n", "<leader>bg", function()
+      dap.set_breakpoint(
+        vim.fn.input("Condition: "),
+        vim.fn.input("Hit condition: "),
+        vim.fn.input("Log message: "))
+    end)
+
+    vim.keymap.set("n", "<F4>", function()
+      dap.terminate()
+      require("dapui").close()
+    end)
+
+    vim.keymap.set('n', '<Leader>dr', function() dap.repl.open() end)
+    vim.keymap.set('n', '<Leader>dl', function() dap.run_last() end)
+
+    vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+      require('dap.ui.widgets').hover()
+    end)
+
+    vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+      require('dap.ui.widgets').preview()
+    end)
+
+    vim.keymap.set('n', '<Leader>df', function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.frames)
+    end)
+
+    vim.keymap.set('n', '<Leader>ds', function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.scopes)
+    end)
+
+
+    vim.keymap.set("n", "<leader>de", function()
+      dapui.eval(nil, { enter = true })
+    end)
   end
 }

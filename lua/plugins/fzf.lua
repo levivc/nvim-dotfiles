@@ -8,7 +8,7 @@ return {
     {
       "<leader>fd",
       function() require("fzf-lua").global() end,
-      desc = "fzf files" },
+      desc = "fzf files from cwd" },
     {
       "<leader>fn",
       function() require("fzf-lua").global({ cwd = vim.fn.stdpath("config") }) end,

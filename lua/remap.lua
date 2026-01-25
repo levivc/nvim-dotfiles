@@ -20,17 +20,18 @@ km.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>J")
 km.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>K")
 km.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>L")
 -- Window resizing
-km.set("n", "<A-->", "5<C-w>-")
-km.set("n", "<A-=>", "5<C-w>+")
-km.set("n", "<A-]>", "5<C-w>>")
-km.set("n", "<A-[>", "5<C-w><")
+km.set("n", "<A-->", "3<C-w>-")
+km.set("n", "<A-=>", "3<C-w>+")
+km.set("n", "<A-]>", "10<C-w>>")
+km.set("n", "<A-[>", "10<C-w><")
 -- Buffers
 km.set("n", "<A-.>", "<cmd>bn<CR>")
 km.set("n", "<A-,>", "<cmd>bp<CR>")
 
 -- leader shortcuts
 -- split and close windows
-km.set("n", "<leader>q", "<C-w>q")
+km.set("n", "<leader>w", "<C-w>q")
+km.set("n", "<leader>q", "<cmd>fclose!<CR>")
 km.set("n", "<leader>s", "<C-w>s")
 km.set("n", "<leader>v", "<C-w>v")
 -- window expand and reset
@@ -43,14 +44,20 @@ km.set("n", "<leader>T", "<C-w>T")
 km.set("n", "<leader>L", "<cmd>tabmove +<CR>")
 km.set("n", "<leader>H", "<cmd>tabmove -<CR>")
 -- execute lua code
-km.set("n", "<leader><leader>x", "<cmd>source %<CR>")
-km.set("n", "<leader>x", "<cmd>.lua<CR>")
-km.set("v", "<leader>x", "<cmd>lua<CR>")
+km.set("n", "<leader>xx", "<cmd>source %<CR>")
+km.set("n", "<leader>xl", "<cmd>.lua<CR>")
+km.set("v", "<leader>x", ":lua<CR>") -- can't use <cmd> for some reason
 -- quickfix, location list
+km.set("n", "<leader>co", "<cmd>copen<CR>")
+km.set("n", "<leader>cc", "<cmd>cclose<CR>")
+km.set("n", "<leader>lo", "<cmd>lopen<CR>")
+km.set("n", "<leader>lc", "<cmd>lclose<CR>")
 km.set("n", "<leader>j", "<cmd>cnext<CR>")
 km.set("n", "<leader>k", "<cmd>cprev<CR>")
+km.set("n", "<leader>.", "<cmd>lnext<CR>")
+km.set("n", "<leader>,", "<cmd>lprev<CR>")
 -- diagnostic
-km.set("n", "<leader>m", vim.diagnostic.setloclist)
-km.set("n", "<leader>M", vim.diagnostic.setqflist)
+km.set("n", "<leader>dl", vim.diagnostic.setloclist)
+km.set("n", "<leader>dq", vim.diagnostic.setqflist)
 -- netrw
 km.set("n", "<leader>e", vim.cmd.Explore)

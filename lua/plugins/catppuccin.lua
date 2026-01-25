@@ -8,10 +8,10 @@ return {
     config = function ()
       require("catppuccin").setup({
         flavour = "mocha",
-        highlight_overrides = {
-          mocha = function(mocha)
-            return { LineNr = { fg = mocha.overlay2 } }
-          end,
+        color_overrides = {
+          mocha = {
+            surface1 = "#6f759d"
+          },
         },
       })
       vim.cmd.colorscheme("catppuccin")
