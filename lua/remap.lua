@@ -50,14 +50,22 @@ km.set("v", "<leader>x", ":lua<CR>") -- can't use <cmd> for some reason
 -- quickfix, location list
 km.set("n", "<leader>co", "<cmd>copen<CR>")
 km.set("n", "<leader>cc", "<cmd>cclose<CR>")
+km.set("n", "<leader>cd", vim.diagnostic.setqflist)
 km.set("n", "<leader>lo", "<cmd>lopen<CR>")
 km.set("n", "<leader>lc", "<cmd>lclose<CR>")
+km.set("n", "<leader>ld", vim.diagnostic.setloclist)
 km.set("n", "<leader>j", "<cmd>cnext<CR>")
 km.set("n", "<leader>k", "<cmd>cprev<CR>")
 km.set("n", "<leader>.", "<cmd>lnext<CR>")
 km.set("n", "<leader>,", "<cmd>lprev<CR>")
--- diagnostic
-km.set("n", "<leader>dl", vim.diagnostic.setloclist)
-km.set("n", "<leader>dq", vim.diagnostic.setqflist)
 -- netrw
-km.set("n", "<leader>e", vim.cmd.Explore)
+km.set("n", "<leader>el", vim.cmd.Explore)
+km.set("n", "<leader>ew", function() vim.cmd.Explore(".") end)
+--terminal
+km.set("n", "<C-j>", function()
+  vim.cmd("botright 15split")
+  vim.cmd.term()
+  vim.cmd.startinsert()
+end)
+
+km.set("t", "<C-j>", function() vim.cmd.wincmd("q") end)

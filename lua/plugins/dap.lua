@@ -4,19 +4,20 @@ return {
     "rcarriga/nvim-dap-ui",
     "nvim-neotest/nvim-nio",
     "theHamsta/nvim-dap-virtual-text",
-    {
-      "jay-babu/mason-nvim-dap.nvim",
-      dependencies = { "mason-org/mason.nvim" }
-    }
   },
 
   config = function ()
-    local mason_dap = require("mason-nvim-dap")
     local dap = require("dap")
     local dapui = require("dapui")
     local dap_virtual_text = require("nvim-dap-virtual-text")
 
     dap_virtual_text.setup({})
+
+    dap.adapters.bashdb = {
+      type = 'executable';
+      command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
+      name = 'bashdb';
+    }
 
     dap.adapters["local-lua"] = {
       type = "executable",
@@ -37,6 +38,35 @@ return {
       end,
     }
 
+    dap.adapters.cppdbg = {
+      id = 'cppdbg',
+      type = 'executable',
+      command = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+    }
+
+    dap.configurations.sh = {
+      {
+        type = 'bashdb',
+        request = 'launch',
+        name = "Launch file",
+        showDebugOutput = true,
+        pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
+        pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+        trace = true,
+        file = "${file}",
+        program = "${file}",
+        cwd = '${workspaceFolder}',
+        pathCat = "cat",
+        pathBash = "/bin/bash",
+        pathMkfifo = "mkfifo",
+        pathPkill = "pkill",
+        args = {},
+        argsString = '',
+        env = {},
+        terminalKind = "integrated",
+      }
+    }
+
     dap.configurations.lua = {
       {
         name = 'Launch file',
@@ -50,12 +80,6 @@ return {
         args = {},
       },
     }
-
-    mason_dap.setup({
-      ensure_installed = { "cppdbg" },
-      automatic_installation = true,
-      handlers = {} -- default
-    })
 
     dap.configurations.c = {
       {
@@ -87,9 +111,9 @@ return {
     dapui.setup({
       layouts = { {
         elements = { {
-            id = "scopes",
-            size = 0.57
-          }, {
+          id = "scopes",
+          size = 0.57
+        }, {
             id = "watches",
             size = 0.15
           }, {
@@ -102,16 +126,16 @@ return {
         position = "left",
         size = 40
       }, {
-        elements = { {
+          elements = { {
             id = "repl",
             size = 0.5
           }, {
-            id = "console",
-            size = 0.5
-          } },
-        position = "bottom",
-        size = 10
-      } },
+              id = "console",
+              size = 0.5
+            } },
+          position = "bottom",
+          size = 10
+        } },
     })
 
     dap.listeners.before.attach.dapui_config = function()

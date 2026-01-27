@@ -6,7 +6,7 @@ return {
   lazy = true,
   keys = {
     {
-      "<leader>fd",
+      "<leader>fw",
       function() require("fzf-lua").global() end,
       desc = "fzf files from cwd" },
     {
