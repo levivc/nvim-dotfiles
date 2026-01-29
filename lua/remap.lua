@@ -61,11 +61,69 @@ km.set("n", "<leader>,", "<cmd>lprev<CR>")
 -- netrw
 km.set("n", "<leader>el", vim.cmd.Explore)
 km.set("n", "<leader>ew", function() vim.cmd.Explore(".") end)
+
 --terminal
-km.set("n", "<C-j>", function()
-  vim.cmd("botright 15split")
-  vim.cmd.term()
+local command
+local term_buf = nil
+local term_chan = nil
+local last_cwd = nil
+
+local function set_run_file()
+  command = vim.fn.input("Command: ", "", "file")
+end
+
+local function show_terminal()
+  local cwd = vim.fn.getcwd()
+  local is_new = false
+
+  -- Check if terminal buffer still exists
+  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+    -- Find if terminal is visible in a window
+    local win = vim.fn.bufwinid(term_buf)
+    if win == -1 then
+      -- Buffer exists but not visible, open it
+      vim.cmd("botright 100vsplit")
+      vim.api.nvim_win_set_buf(0, term_buf)
+    else
+      -- Already visible, focus it
+      vim.api.nvim_set_current_win(win)
+    end
+
+    -- cd if cwd changed
+    if last_cwd ~= cwd then
+      vim.api.nvim_chan_send(term_chan, "cd " .. vim.fn.shellescape(cwd) .. "\n")
+      last_cwd = cwd
+    end
+  else
+    -- Create new terminal
+    vim.cmd("botright 100vsplit")
+    vim.cmd.term()
+    term_buf = vim.api.nvim_get_current_buf()
+    term_chan = vim.b.terminal_job_id
+    last_cwd = cwd
+    is_new = true
+  end
+
   vim.cmd.startinsert()
+  return is_new
+end
+
+km.set("n", "<leader>xc", set_run_file)
+
+km.set("n", "<leader>xj", function()
+  if not command then set_run_file() end
+  local is_new = show_terminal()
+  if is_new then
+    vim.defer_fn(function()
+      vim.api.nvim_chan_send(term_chan, command .. "\n")
+    end, 500)
+  else
+    vim.api.nvim_chan_send(term_chan, command .. "\n")
+  end
+  vim.cmd.stopinsert()
+  vim.cmd.wincmd("p")
 end)
+
+km.set("n", "<C-j>", show_terminal)
 
 km.set("t", "<C-j>", function() vim.cmd.wincmd("q") end)

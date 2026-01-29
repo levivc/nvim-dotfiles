@@ -35,6 +35,14 @@ vim.diagnostic.config({
   severity_sort = true
 })
 
+vim.api.nvim_create_autocmd("WinEnter", {
+  callback = function()
+   if vim.bo.buftype == "terminal" then
+      vim.cmd.startinsert()
+    end
+  end
+})
+
 -- Highlight when yanking (copying) text.
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
