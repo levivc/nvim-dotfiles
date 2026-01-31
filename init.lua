@@ -1,6 +1,8 @@
 require("remap")
 require("config.lazy")
 
+vim.o.termguicolors = true
+
 vim.g.python3_host_prog = '/usr/bin/python3'
 vim.g.netrw_preview = 1
 
@@ -27,6 +29,8 @@ vim.o.splitbelow = true
 vim.o.clipboard = "unnamedplus"
 vim.o.undofile = true
 vim.o.updatetime = 250
+
+vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:ver25-blinkon500-blinkoff500-TermCursor"
 
 vim.diagnostic.config({
   underline = false,

@@ -200,7 +200,7 @@ return {
     end)
 
 
-    vim.keymap.set("n", "<leader>de", function()
+    vim.keymap.set({"n", "v"}, "<leader>de", function()
       dapui.eval(nil, { enter = true })
     end)
   end
