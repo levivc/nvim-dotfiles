@@ -1,4 +1,5 @@
 require("remap")
+require("term")
 require("config.lazy")
 
 vim.o.termguicolors = true
@@ -37,14 +38,6 @@ vim.diagnostic.config({
   virtual_text = true,
   signs = false,
   severity_sort = true
-})
-
-vim.api.nvim_create_autocmd("WinEnter", {
-  callback = function()
-   if vim.bo.buftype == "terminal" then
-      vim.cmd.startinsert()
-    end
-  end
 })
 
 -- Highlight when yanking (copying) text.
