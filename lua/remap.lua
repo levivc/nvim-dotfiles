@@ -8,28 +8,28 @@ vim.keymap.set('n', '<C-s>', '<C-\\><C-n><cmd>w<CR>')
 
 -- alt shortcuts
 -- Navigate windows
-vim.keymap.set({ "t", "i", "n" }, "<A-h>", "<C-\\><C-n><C-w>h")
-vim.keymap.set({ "t", "i", "n" }, "<A-j>", "<C-\\><C-n><C-w>j")
-vim.keymap.set({ "t", "i", "n" }, "<A-k>", "<C-\\><C-n><C-w>k")
-vim.keymap.set({ "t", "i", "n" }, "<A-l>", "<C-\\><C-n><C-w>l")
+vim.keymap.set({ "t", "i", "n" }, "<A-H>", "<C-\\><C-n><C-w>h")
+vim.keymap.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>j")
+vim.keymap.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>k")
+vim.keymap.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>l")
 -- Move windows
-vim.keymap.set({ "t", "i", "n" }, "<A-H>", "<C-\\><C-n><C-w>H")
-vim.keymap.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>J")
-vim.keymap.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>K")
-vim.keymap.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>L")
+--vim.keymap.set({ "t", "i", "n" }, "<A-H>", "<C-\\><C-n><C-w>H")
+--vim.keymap.set({ "t", "i", "n" }, "<A-J>", "<C-\\><C-n><C-w>J")
+--vim.keymap.set({ "t", "i", "n" }, "<A-K>", "<C-\\><C-n><C-w>K")
+--vim.keymap.set({ "t", "i", "n" }, "<A-L>", "<C-\\><C-n><C-w>L")
 -- Window resizing
-vim.keymap.set("n", "<A-->", "3<C-w>-")
-vim.keymap.set("n", "<A-=>", "3<C-w>+")
-vim.keymap.set("n", "<A-]>", "10<C-w>>")
-vim.keymap.set("n", "<A-[>", "10<C-w><")
+vim.keymap.set("n", "<A-m>", "3<C-w>-")
+vim.keymap.set("n", "<A-u>", "3<C-w>+")
+vim.keymap.set("n", "<A-9>", "10<C-w>>")
+vim.keymap.set("n", "<A-0>", "10<C-w><")
 -- Buffers
-vim.keymap.set("n", "<A-.>", "<cmd>bn<CR>")
-vim.keymap.set("n", "<A-,>", "<cmd>bp<CR>")
+vim.keymap.set("n", "<A-N>", "<cmd>bn<CR>")
+vim.keymap.set("n", "<A-B>", "<cmd>bp<CR>")
 
 -- leader shortcuts
 -- split and close windows
-vim.keymap.set("n", "<leader>w", "<C-w>q")
-vim.keymap.set("n", "<leader>q", "<cmd>fclose!<CR>")
+vim.keymap.set("n", "<leader>q", "<C-w>q")
+vim.keymap.set("n", "<leader>w", "<cmd>fclose!<CR>")
 vim.keymap.set("n", "<leader>s", "<C-w>s")
 vim.keymap.set("n", "<leader>v", "<C-w>v")
 -- window expand and reset
