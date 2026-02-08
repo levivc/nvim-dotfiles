@@ -32,6 +32,7 @@ vim.o.undofile = true
 vim.o.updatetime = 250
 
 vim.o.guicursor = "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:ver25-blinkon500-blinkoff500-TermCursor"
+vim.o.swapfile = false
 
 vim.diagnostic.config({
   underline = false,
@@ -57,3 +58,4 @@ vim.api.nvim_create_user_command('GitBlameLine', function()
 end, { desc = 'Print the git blame for the current line' })
 
 vim.cmd('packadd! nohlsearch')
+

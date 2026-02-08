@@ -4,7 +4,7 @@ vim.g.maplocalleader = "\\"
 -- Use <Esc> to exit terminal mode
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 -- Saving
-vim.keymap.set('n', '<C-s>', '<C-\\><C-n><cmd>w<CR>')
+vim.keymap.set('n', '<leader>s', '<C-\\><C-n><cmd>w<CR>')
 
 -- alt shortcuts
 -- Navigate windows
@@ -25,20 +25,15 @@ vim.keymap.set("n", "<A-0>", "10<C-w><")
 -- Buffers
 vim.keymap.set("n", "<A-N>", "<cmd>bn<CR>")
 vim.keymap.set("n", "<A-B>", "<cmd>bp<CR>")
+vim.keymap.set("n", "<leader>ls", "<cmd>ls<CR>:b<Space>")
+vim.keymap.set("n", "<leader>bd", "<cmd>ls<CR>:bd<Space>")
 
 -- leader shortcuts
 -- split and close windows
 vim.keymap.set("n", "<leader>q", "<C-w>q")
 vim.keymap.set("n", "<leader>w", "<cmd>fclose!<CR>")
-vim.keymap.set("n", "<leader>s", "<C-w>s")
-vim.keymap.set("n", "<leader>v", "<C-w>v")
--- window expand and reset
-vim.keymap.set("n", "<leader>-", "<C-w>_")
-vim.keymap.set("n", "<leader><Bslash>", "<C-w>|")
-vim.keymap.set("n", "<leader>=", "<C-w>=")
 -- tabs
 vim.keymap.set("n", "<leader>t", "<cmd>tabe<CR>")
-vim.keymap.set("n", "<leader>T", "<C-w>T")
 vim.keymap.set("n", "<leader>L", "<cmd>tabmove +<CR>")
 vim.keymap.set("n", "<leader>H", "<cmd>tabmove -<CR>")
 -- execute lua code
@@ -57,6 +52,14 @@ vim.keymap.set("n", "<leader>k", "<cmd>cprev<CR>")
 vim.keymap.set("n", "<leader>.", "<cmd>lnext<CR>")
 vim.keymap.set("n", "<leader>,", "<cmd>lprev<CR>")
 -- netrw
+vim.keymap.set("n", "<leader>ej", function() vim.cmd.Explore(".") end)
 vim.keymap.set("n", "<leader>el", vim.cmd.Explore)
-vim.keymap.set("n", "<leader>ew", function() vim.cmd.Explore(".") end)
 vim.keymap.set("n", "<leader>en", function() vim.cmd.Explore(vim.fn.stdpath("config")) end)
+vim.keymap.set("n", "<leader>em", function() vim.cmd.Explore("~/.config/") end)
+
+vim.keymap.set("n", "gk", function()
+  local ft = vim.bo.filetype
+  local word = vim.fn.expand("<cword>")
+  vim.fn.jobstart({ "zeal", string.format("%s:%s", ft, word) })
+end)
+

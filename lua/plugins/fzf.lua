@@ -6,13 +6,24 @@ return {
   lazy = true,
   keys = {
     {
-      "<leader>fd",
+      "<leader>fj",
       function() require("fzf-lua").files() end,
-      desc = "fzf files from cwd" },
+      desc = "fzf files from cwd"
+    },
+    {
+      "<leader>fl",
+      function() require('fzf-lua').files({ cwd = vim.fn.expand('%:p:h') }) end,
+      desc = "fzf files from current file directory"
+    },
     {
       "<leader>fn",
       function() require("fzf-lua").files({ cwd = vim.fn.stdpath("config") }) end,
       desc = "fzf nvim config files"
+    },
+    {
+      "<leader>fm",
+      function() require("fzf-lua").files({ cwd = "~/.config" }) end,
+      desc = "fzf ~/config files"
     },
     {
       "<leader>fh",

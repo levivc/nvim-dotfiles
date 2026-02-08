@@ -161,7 +161,7 @@ return {
 
 
     vim.keymap.set("n", "<leader>bp", function() dap.toggle_breakpoint() end)
-    vim.keymap.set("n", "<leader>bd", function() dap.clear_breakpoints() end)
+    vim.keymap.set("n", "<leader>br", function() dap.clear_breakpoints() end)
     vim.keymap.set("n", "<leader>bl", function() dap.list_breakpoints(true) end)
     vim.keymap.set("n", "<leader>bc", function() dap.set_breakpoint(vim.fn.input("Condition: ")) end)
     vim.keymap.set("n", "<leader>bh", function() dap.set_breakpoint(nil, vim.fn.input("Hit condition: ")) end)
