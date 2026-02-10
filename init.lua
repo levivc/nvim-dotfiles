@@ -26,6 +26,7 @@ vim.o.confirm = true
 
 vim.o.splitright = true
 vim.o.splitbelow = true
+vim.o.equalalways = false
 
 vim.o.clipboard = "unnamedplus"
 vim.o.undofile = true
@@ -56,6 +57,12 @@ vim.api.nvim_create_user_command('GitBlameLine', function()
   local filename = vim.api.nvim_buf_get_name(0)
   print(vim.fn.system({ 'git', 'blame', '-L', line_number .. ',+1', filename }))
 end, { desc = 'Print the git blame for the current line' })
+
+vim.api.nvim_create_user_command("LaunchJsonC", function()
+  local template = vim.fn.readfile(vim.fn.stdpath("config") .. "/templates/launch_c.json")
+  vim.fn.mkdir(".vscode", "p")
+  vim.fn.writefile(template, ".vscode/launch.json")
+end, { desc = "Create the launch.json template for C"} )
 
 vim.cmd('packadd! nohlsearch')
 
