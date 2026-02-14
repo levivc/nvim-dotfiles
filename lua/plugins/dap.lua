@@ -1,7 +1,7 @@
 local sidebar = nil
 
 local function create_sidebar(widgets)
-  return widgets.sidebar(widgets.scopes, nil, "aboveleft 30vsplit")
+  return widgets.sidebar(widgets.scopes, nil, "aboveleft 50vsplit")
 end
 
 local function sidebar_open(widgets)
@@ -29,7 +29,7 @@ return {
       "igorlfs/nvim-dap-view",
       opts = {
         winbar = {
-          sections = { "watches", "exceptions", "breakpoints", "threads", "disassembly", "repl" }
+          sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "disassembly", "repl" }
         },
       },
     },
@@ -69,7 +69,7 @@ return {
       { "<F5>",  function() dap.continue() end },
       { "<F10>", function() dap.step_over() end },
       { "<F11>", function() dap.step_into() end },
-      { "<F12>", function() dap.step_out() end },
+      { "<S-F11>", function() dap.step_out() end },
       { "<F9>",  function() dap.toggle_breakpoint() end },
       { "<F8>",  function() dap.clear_breakpoints() end },
       { "<F6>",  function() dap.run_to_cursor() end },
@@ -137,11 +137,6 @@ return {
       command = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
     }
 
-    dap.adapters.codelldb = {
-      type = "executable",
-      command = "codelldb", -- or if not in $PATH: "/absolute/path/to/codelldb"
-    }
-
     dap.configurations.sh = {
       {
         type = 'bashdb',
@@ -203,19 +198,6 @@ return {
     --      },
     --    }
     --    dap.configurations.cpp = dap.configurations.c
-
-    dap.configurations.asm = {
-      {
-        name = "Launch file",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = true,
-      },
-    }
 
     dap.listeners.before.attach.dap_config = function()
       sidebar_open(widgets)

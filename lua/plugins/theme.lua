@@ -30,7 +30,8 @@ return {
             sumiInk6 = "#747497",
             peachRed = "#e26165",
             fujiGray = "#8c8b81",
-            waveBlue1 = "#2a3e5a",
+            waveBlue1 = "#3c5880",
+            --waveBlue1 = "#324a6c",
           }
         },
         overrides = function()

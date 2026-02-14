@@ -80,5 +80,5 @@ vim.keymap.set("n", "<leader>xj", function()
 end)
 
 vim.keymap.set("n", "<leader>xc", set_command)
-vim.keymap.set("n", "<C-j>", show_terminal)
-vim.keymap.set("t", "<C-j>", function() vim.cmd.wincmd("q") end)
+vim.keymap.set("n", "<A-/>", show_terminal)
+vim.keymap.set("t", "<A-/>", function() vim.cmd.wincmd("q") end)
