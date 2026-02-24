@@ -9,6 +9,7 @@ return {
         use_icons = true
       })
       --require("mini.pairs").setup()
+      require("mini.align").setup()
     end
   }
 }

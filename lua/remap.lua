@@ -61,6 +61,8 @@ vim.keymap.set("n", "<leader>el", vim.cmd.Explore)
 vim.keymap.set("n", "<leader>en", function() vim.cmd.Explore(vim.fn.stdpath("config")) end)
 vim.keymap.set("n", "<leader>em", function() vim.cmd.Explore("~/.config/") end)
 
+vim.keymap.set("n", "<leader>rw", ":%s/\\<\\>//gc<left><left><left>")
+
 vim.keymap.set("n", "gk", function()
   local ft = vim.bo.filetype
   local word = vim.fn.expand("<cword>")

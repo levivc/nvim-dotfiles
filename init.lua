@@ -6,8 +6,10 @@ vim.o.termguicolors = true
 
 vim.g.python3_host_prog = '/usr/bin/python3'
 vim.g.netrw_preview = 1
+vim.g.netrw_liststyle = 3
+vim.g.netrw_altfile = 1
 
-vim.o.tabstop = 8
+vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.softtabstop = 4
 vim.o.expandtab = true
