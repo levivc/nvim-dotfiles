@@ -1,7 +1,7 @@
 return {
  {
     "mrjones2014/smart-splits.nvim",
-    build = "./kitty/install-kittens.bash",
+    --build = "./kitty/install-kittens.bash",
     lazy = false,
 
     config = function()

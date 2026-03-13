@@ -66,5 +66,12 @@ vim.api.nvim_create_user_command("LaunchJsonC", function()
   vim.fn.writefile(template, ".vscode/launch.json")
 end, { desc = "Create the launch.json template for C"} )
 
+vim.api.nvim_create_user_command("LaunchJsonZig", function()
+  local template = vim.fn.readfile(vim.fn.stdpath("config") .. "/templates/launch_zig.json")
+  vim.fn.mkdir(".vscode", "p")
+  vim.fn.writefile(template, ".vscode/launch.json")
+end, { desc = "Create the launch.json template for Zig"} )
+
+
 vim.cmd('packadd! nohlsearch')
 

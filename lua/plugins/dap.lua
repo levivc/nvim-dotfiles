@@ -1,7 +1,7 @@
 local sidebar = nil
 
 local function create_sidebar(widgets)
-  return widgets.sidebar(widgets.scopes, nil, "aboveleft 50vsplit")
+  return widgets.sidebar(widgets.scopes, nil, "aboveleft 30vsplit")
 end
 
 local function sidebar_open(widgets)
@@ -29,8 +29,13 @@ return {
       "igorlfs/nvim-dap-view",
       opts = {
         winbar = {
-          sections = { "watches", "scopes", "exceptions", "breakpoints", "threads", "disassembly", "repl" }
+          sections = { "watches", "scopes", "threads", "disassembly", "exceptions", "breakpoints", "console", "repl" },
+          default_section = "scopes",
         },
+        windows = {
+          size = 0.35
+        },
+        auto_toggle = true,
       },
     },
 
@@ -98,6 +103,7 @@ return {
       { "<Leader>dt", function() dapview.jump_to_view("threads") end },
       { "<Leader>dd", function() dapview.jump_to_view("disassembly") end },
       { "<Leader>dr", function() dapview.jump_to_view("repl") end },
+      { "<Leader>dc", function() dapview.jump_to_view("console") end },
     }
   end,
 
@@ -132,9 +138,21 @@ return {
     }
 
     dap.adapters.cppdbg = {
-      id = 'cppdbg',
-      type = 'executable',
+      id = "cppdbg",
+      type = "executable",
       command = vim.fn.stdpath("data") .. "/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7",
+    }
+
+    --dap.adapters.lldb = {
+    --  type = "executable",
+    --  command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+    --  name = "lldb"
+    --}
+
+    dap.adapters["lldb-dap"] = {
+      type = "executable",
+      command = "/home/levi/sources/llvm-zig/llvm-project/build/bin/lldb-dap",
+      name = 'lldb-dap'
     }
 
     dap.configurations.sh = {
@@ -174,38 +192,15 @@ return {
       },
     }
 
-    --    dap.configurations.c = {
-    --      {
-    --        name = "Launch executable",
-    --        type = "cppdbg",
-    --        request = "launch",
-    --        MIMode = "gdb",
-    --        program = function()
-    --          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    --        end,
-    --        cwd = '${workspaceFolder}',
-    --        stopAtEntry = true,
-    --      },
-    --      {
-    --        name = "Launch exe",
-    --        type = "codelldb",
-    --        request = "launch",
-    --        program = function()
-    --          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    --        end,
-    --        cwd = '${workspaceFolder}',
-    --        stopOnEntry = false,
-    --      },
-    --    }
-    --    dap.configurations.cpp = dap.configurations.c
+    --dap.listeners.before.attach.dap_config = function()
+    --  sidebar_open(widgets)
+    --  --dapview.toggle(true);
+    --end
 
-    dap.listeners.before.attach.dap_config = function()
-      sidebar_open(widgets)
-    end
-
-    dap.listeners.before.launch.dap_config = function()
-      sidebar_open(widgets)
-    end
+    --dap.listeners.before.launch.dap_config = function()
+    --  sidebar_open(widgets)
+    --  --dapview.toggle(true);
+    --end
 
     dap.listeners.after.disconnect.dap_config = function()
       close_view_and_sidebar(dapview)

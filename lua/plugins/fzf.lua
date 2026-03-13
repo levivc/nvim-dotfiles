@@ -3,7 +3,6 @@ return {
   dependencies = {
     "echasnovski/mini.nvim",
   },
-  lazy = true,
   keys = {
     {
       "<leader>fj",
@@ -40,5 +39,22 @@ return {
       function() require("fzf-lua").lsp_document_symbols() end,
       desc = "fzf document symbols"
     },
-  }
+    {
+      "<leader>fg",
+      function() require("fzf-lua").live_grep() end,
+      desc = "fzf live grep"
+    },
+    {
+      "<leader>fz",
+      function() require("fzf-lua").live_grep({ cwd = "~/.local/prog/zig/zig/lib/" }) end,
+      desc = "fzf live grep zig lib"
+    }
+  },
+  config = function()
+    require("fzf-lua").setup({
+      files = {
+        fd_opts = "--exclude .zig-cache"
+      }
+    })
+  end
 }

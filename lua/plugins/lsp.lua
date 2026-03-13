@@ -13,5 +13,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = { "folke/lazydev.nvim" },
+
+    config = function()
+      vim.lsp.enable("zls")
+    end
   },
 }
